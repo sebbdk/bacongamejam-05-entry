@@ -3,7 +3,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
 	init:function(x, y, settings) {
 		this.parent(x, y, settings);
 
-		this.maxVel.x = 4;
+		this.maxVel.x = 3 ;
 		this.maxVel.y = 4;
 		this.setVelocity(6, 6);
 
