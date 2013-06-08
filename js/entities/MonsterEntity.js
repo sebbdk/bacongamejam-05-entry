@@ -3,9 +3,9 @@ game.MonsterEntity = me.ObjectEntity.extend({
 	init:function(x, y, settings) {
 		this.parent(x, y, settings);
 
-		this.maxVel.x = 0.5;
-		this.maxVel.y = 0.5;
-		this.setVelocity(2, 2);
+		this.maxVel.x = 1;
+		this.maxVel.y = 1;
+		this.setVelocity(4, 4);
 	},
 
 	update:function() {

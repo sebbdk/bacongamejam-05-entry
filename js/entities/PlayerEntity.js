@@ -3,13 +3,14 @@ game.PlayerEntity = me.ObjectEntity.extend({
 	init:function(x, y, settings) {
 		this.parent(x, y, settings);
 
-		this.maxVel.x = 2;
-		this.maxVel.y = 2;
-		this.setVelocity(3, 3);
+		this.maxVel.x = 4;
+		this.maxVel.y = 4;
+		this.setVelocity(6, 6);
 
-		this.updateColRect(6, 20, -1, 0);
+		this.updateColRect(18, 60, -1, 0);
 
-		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
+		this.camPos = new me.Vector2d(this.pos.x, this.pos.y);
+		me.game.viewport.follow(this.camPos, me.game.viewport.AXIS.BOTH);
 
 		game.player = this;
 	},
@@ -41,6 +42,9 @@ game.PlayerEntity = me.ObjectEntity.extend({
 		}
 
 		this.updateMovement();
+
+		this.camPos.x = this.pos.x + 48;
+		this.camPos.y = this.pos.y + 48;
 
 		// update animation if necessary
 		if (this.vel.x !== 0 || this.vel.y !== 0) {
