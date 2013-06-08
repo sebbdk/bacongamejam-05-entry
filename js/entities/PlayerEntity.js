@@ -3,9 +3,9 @@ game.PlayerEntity = me.ObjectEntity.extend({
 	init:function(x, y, settings) {
 		this.parent(x, y, settings);
 
-		this.maxVel.x = 0.5;
-		this.maxVel.y = 0.5;
-		this.setVelocity(2, 2);
+		this.maxVel.x = 2;
+		this.maxVel.y = 2;
+		this.setVelocity(3, 3);
 
 		this.updateColRect(6, 20, -1, 0);
 
