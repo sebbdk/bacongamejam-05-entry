@@ -12,9 +12,24 @@ game.PlayerEntity = me.ObjectEntity.extend({
 		me.game.viewport.follow(this.camPos, me.game.viewport.AXIS.BOTH);
 
 		game.player = this;
+
+		this.gridPos = {
+			x:Math.ceil(game.player.pos.x/96),
+			y:Math.ceil(game.player.pos.y/96)
+		};
 	},
 
 	update:function() {
+
+		var newGridPos = {
+			x:Math.ceil(game.player.pos.x/96),
+			y:Math.ceil(game.player.pos.y/96)
+		};
+
+		if(newGridPos.x != this.gridPos.x || newGridPos.y != this.gridPos.y ) {
+			this.gridPos = newGridPos;
+			me.event.publish('playerPosChange', this);
+		}
 
 		if(me.input.isKeyPressed('right')) {
 			this.vel.x += this.accel.x * me.timer.tick;
@@ -43,8 +58,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
 		this.updateMovement();
 		me.game.collide(this);
 
-		//this.camPos.x = this.pos.x + 48;
-		//this.camPos.y = this.pos.y + 48;
+
 
 		// update animation if necessary
 		if (this.vel.x !== 0 || this.vel.y !== 0) {
