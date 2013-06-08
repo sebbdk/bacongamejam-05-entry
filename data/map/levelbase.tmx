@@ -313,6 +313,11 @@
     <property name="image" value="player"/>
    </properties>
   </object>
+  <object name="MonsterEntity" x="128" y="64" width="32" height="32">
+   <properties>
+    <property name="image" value="monster01"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="fences" width="12" height="12">
   <data>

@@ -12,6 +12,7 @@ game.resources = [
 	 * {name: "example_tps", type: "tps", src: "data/img/example_tps.json"},
 	 */
 	{name: "player", type:"image", src: "data/img/player.png"},
+	{name: "monster01", type:"image", src: "data/img/monster01.png"},
 
 	/* Maps. 
 	 * @example

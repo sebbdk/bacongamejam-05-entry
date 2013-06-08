@@ -4,7 +4,7 @@ var game = {
 	// Run on page load.
 	"onload" : function () {
 		// Initialize the video.
-		if (!me.video.init("screen", 640, 480, true, 'auto')) {
+		if (!me.video.init("screen", 320, 320, true, 'auto')) {
 			alert("Your browser does not support HTML5 canvas.");
 			return;
 		}
@@ -27,6 +27,9 @@ var game = {
 
 		// Initialize melonJS and display a loading screen.
 		me.state.change(me.state.LOADING);
+
+		//debug info
+		me.debug.renderHitBox = true;
 	},
 
 
@@ -40,6 +43,7 @@ var game = {
 
 		//registre oure entities
 		me.entityPool.add('PlayerEntity', game.PlayerEntity);
+		me.entityPool.add('MonsterEntity', game.MonsterEntity);
 
 		//registre oure controlls
 		me.input.bindKey(me.input.KEY.A, 'left');

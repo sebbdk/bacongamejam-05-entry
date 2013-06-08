@@ -4,8 +4,6 @@ game.PlayScreen = me.ScreenObject.extend({
 	 */
 	onResetEvent: function() {
 		me.levelDirector.loadLevel("levelbase");
-		me.video.scale(me.video.getScreenContext(), 1.5);
-		me.sys.gravity = 0;
 	},
 
 	/**	
