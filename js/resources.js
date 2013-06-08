@@ -16,6 +16,7 @@ game.resources = [
 	 */
 	{name: "player", type:"image", src: "data/img/player.png"},
 	{name: "monster01", type:"image", src: "data/img/monster01.png"},
+	{name: "hole", type:"image", src: "data/img/hole.png"},
 
 	/* Maps. 
 	 * @example

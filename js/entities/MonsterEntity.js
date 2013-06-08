@@ -3,11 +3,16 @@ game.MonsterEntity = me.ObjectEntity.extend({
 	init:function(x, y, settings) {
 		this.parent(x, y, settings);
 
-
+		this.collidable = true;
 		this.setVelocity(4, 4);
 		this.maxVel.x = 3 + 2 * Math.random();
 		this.maxVel.y = 3 + 2 * Math.random() ;
-		console.log(this.maxVel);
+	},
+
+	onCollision:function(res, obj) {
+		if(obj === game.player) {
+			me.levelDirector.reloadLevel(true);
+		}
 	},
 
 	update:function() {
@@ -30,6 +35,7 @@ game.MonsterEntity = me.ObjectEntity.extend({
 		}
 
 		this.updateMovement();
+		me.game.collide(this);
 
 		// update animation if necessary
 		if (this.vel.x !== 0 || this.vel.y !== 0) {

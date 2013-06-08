@@ -47,6 +47,7 @@ var game = {
 		//registre oure entities
 		me.entityPool.add('PlayerEntity', game.PlayerEntity);
 		me.entityPool.add('MonsterEntity', game.MonsterEntity);
+		me.entityPool.add('DeathTrapEntity', game.DeathTrapEntity);
 
 		//registre oure controlls
 		me.input.bindKey(me.input.KEY.A, 'left');

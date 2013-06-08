@@ -3,9 +3,8 @@ game.PlayerEntity = me.ObjectEntity.extend({
 	init:function(x, y, settings) {
 		this.parent(x, y, settings);
 
-		this.maxVel.x = 3 ;
-		this.maxVel.y = 4;
 		this.setVelocity(6, 6);
+		this.collidable = true;
 
 		this.updateColRect(18, 60, -1, 0);
 
@@ -42,6 +41,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
 		}
 
 		this.updateMovement();
+		me.game.collide(this);
 
 		//this.camPos.x = this.pos.x + 48;
 		//this.camPos.y = this.pos.y + 48;
