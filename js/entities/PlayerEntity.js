@@ -9,7 +9,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
 
 		this.updateColRect(18, 60, -1, 0);
 
-		this.camPos = new me.Vector2d(this.pos.x, this.pos.y);
+		this.camPos = new me.Vector2d(96*8, 96*8);
 		me.game.viewport.follow(this.camPos, me.game.viewport.AXIS.BOTH);
 
 		game.player = this;
@@ -43,8 +43,8 @@ game.PlayerEntity = me.ObjectEntity.extend({
 
 		this.updateMovement();
 
-		this.camPos.x = this.pos.x + 48;
-		this.camPos.y = this.pos.y + 48;
+		//this.camPos.x = this.pos.x + 48;
+		//this.camPos.y = this.pos.y + 48;
 
 		// update animation if necessary
 		if (this.vel.x !== 0 || this.vel.y !== 0) {
