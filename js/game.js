@@ -36,11 +36,16 @@ var game = {
 		me.state.set(me.state.MENU, new game.TitleScreen());
 		me.state.set(me.state.PLAY, new game.PlayScreen());
 
+		me.sys.gravity = 0;
+
 		//registre oure entities
 		me.entityPool.add('PlayerEntity', game.PlayerEntity);
 
 		//registre oure controlls
-		
+		me.input.bindKey(me.input.KEY.A, 'left');
+		me.input.bindKey(me.input.KEY.D, 'right');
+		me.input.bindKey(me.input.KEY.W, 'up');
+		me.input.bindKey(me.input.KEY.S, 'down');
 
 		// Start the game.
 		me.state.change(me.state.PLAY);
