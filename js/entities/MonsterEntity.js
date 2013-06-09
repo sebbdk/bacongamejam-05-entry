@@ -64,6 +64,7 @@ game.MonsterEntity = me.ObjectEntity.extend({
 	onCollision:function(res, obj) {
 		if(obj === game.player) {
 			me.levelDirector.reloadLevel(true);
+			me.state.current().onResetEvent()
 		}
 	},
 
@@ -82,7 +83,7 @@ game.MonsterEntity = me.ObjectEntity.extend({
 					this.path.shift();
 				}
 
-				if(this.path) {
+				if(this.path.length > 0) {
 					this.gotoVector = new me.Vector2d((this.path[0][0]*96), (this.path[0][1]*96));
 				}
 			}

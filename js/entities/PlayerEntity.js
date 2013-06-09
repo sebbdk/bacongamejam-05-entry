@@ -17,6 +17,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
 			x:Math.ceil(game.player.pos.x/96),
 			y:Math.ceil(game.player.pos.y/96)
 		};
+		me.event.publish('playerPosChange', this);
 	},
 
 	update:function() {

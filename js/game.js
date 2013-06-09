@@ -29,7 +29,7 @@ var game = {
 		me.state.change(me.state.LOADING);
 
 		//debug info
-		me.debug.renderHitBox = true;
+	//	me.debug.renderHitBox = true;
 	//	me.debug.displayFPS = true;
 	},
 
@@ -42,13 +42,14 @@ var game = {
 
 		me.sys.gravity = 0;
 		me.video.setImageSmoothing(me.video.getSystemContext(), false);
-		me.game.viewport.setDeadzone(10,10);
+		me.game.viewport.setDeadzone(0,0);
 
 		//registre oure entities
 		me.entityPool.add('PlayerEntity', game.PlayerEntity);
 		me.entityPool.add('MonsterEntity', game.MonsterEntity);
 		me.entityPool.add('DeathTrapEntity', game.DeathTrapEntity);
 		me.entityPool.add('TestObject', game.TestObject);
+		me.entityPool.add('DarknessEntity', game.DarknessEntity);
 
 		//registre oure controlls
 		me.input.bindKey(me.input.KEY.A, 'left');
