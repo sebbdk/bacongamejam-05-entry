@@ -1,50 +1,43 @@
-game.TestObject = me.ObjectEntity.extend({
+game.MonsterEntity = game.CreatureEntity.extend({
 
-	init:function(x, y, settings) {
-		settings.image = 'monster01';
-		settings.spritewidth = 96;
-		settings.spriteheight = 96;
-		this.parent(x, y, settings);
-	}
-
-});
-
-function lineDistance( point1, point2 ) {
-	var xs = 0;
-	var ys = 0;
-
-	xs = point2.x - point1.x;
-	xs = xs * xs;
-
-	ys = point2.y - point1.y;
-	ys = ys * ys;
-
-	return Math.sqrt( xs + ys );
-}
-
-
-game.MonsterEntity = me.ObjectEntity.extend({
+	destination:null,
+	gotoVector:null,
+	lastPathFindTime:Math.round(new Date().getTime()),
 
 	init:function(x, y, settings) {
 		var _self = this;
 
 		this.parent(x, y, settings);
 
-		this.collidable = true;
-		this.setVelocity(4, 4);
-		this.maxVel.x = 3 + 2 * Math.random();
-		this.maxVel.y = 3 + 2 * Math.random() ;
+		this.isMonster = true;
+		this.setVelocity(3, 3);
 		this.path = null;
 
 		this.updateColRect(18, 60, 18, 60);
 
-		me.event.subscribe('playerPosChange', function() {
-			_self.findPath();
-		});
+		me.event.subscribe('playerPosChange', function() { _self.attackPlayer(); });
+		me.event.subscribe('placeTorch', function() { _self.attackPlayer(); });
+
+		this.gridPos = {
+			x:Math.ceil(game.player.pos.x/96),
+			y:Math.ceil(game.player.pos.y/96)
+		};
+
+		this.shotConfig = new MonsterShotConfig();
+	},
+
+	attackPlayer:function() {
+		this.findPath();
 	},
 
 	findPath:function() {
 		if(this.pos) {
+			//game.grid.setWalkableAt(this.gridPos.x, this.gridPos.y, true);
+
+			if(this.destination) {
+				//game.grid.setWalkableAt(this.destination[0], this.destination[1], true);
+			}
+
 			var grid = game.grid.clone();
 			this.path = game.finder.findPath(
 				Math.round(this.pos.x/96),
@@ -58,34 +51,73 @@ game.MonsterEntity = me.ObjectEntity.extend({
 			this.path.shift();
 
 			this.gotoVector = null;
+
+			if(this.path.length) {
+				this.destination = [this.path[this.path.length-1][0], this.path[this.path.length-1][1]];
+				//game.grid.setWalkableAt(this.destination[0], this.destination[1], false);
+			}
+
+			//game.grid.setWalkableAt(this.gridPos.x, this.gridPos.y, false);
 		}
 	},
 
 	onCollision:function(res, obj) {
 		if(obj === game.player) {
-			me.levelDirector.reloadLevel(true);
-			me.state.current().onResetEvent()
+			//me.state.current().resetLevel();
 		}
 	},
 
-	gotoVector:null,
 /**
  * This function is hell in a bucket,please fix it....
  * @return despair ..... (boolean)
  */
 	update:function() {
+		this.shoot(game.player.pos, true);
+
+		//check if we need to pathfind again...
+		if(new Date().getTime() - this.lastPathFindTime > 100 && game.player.isVisible()) {
+			this.attackPlayer();
+			this.lastPathFindTime = new Date().getTime();
+		}
+
+		//become quicker if the player is visible
+		if(game.player.isVisible()) {
+			this.setVelocity(5, 5);
+		} else {
+			this.setVelocity(2, 2);
+		}
+
+		//update the grid position
+		var newGridPos = {
+			x:Math.round(this.pos.x/96),
+			y:Math.round(this.pos.y/96)
+		};
+
+		if(newGridPos.x != this.gridPos.x || newGridPos.y != this.gridPos.y ) {
+			this.gridPos = newGridPos;
+		}
+
+
+
+
+
+
+
+
+		//Hellish path finding logic below
 		if(this.path && this.path.length > 0) {
 
 			if(this.gotoVector === null || lineDistance(this.pos, this.gotoVector) < 10) {
 				if(this.gotoVector) {
 					this.pos.x = this.gotoVector.x;
 					this.pos.y = this.gotoVector.y;
-					this.path.shift();
 				}
 
 				if(this.path.length > 0) {
 					this.gotoVector = new me.Vector2d((this.path[0][0]*96), (this.path[0][1]*96));
 				}
+
+				this.path.shift();
 			}
 		}
 

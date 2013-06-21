@@ -1,6 +1,5 @@
+var darktiles = [];
 game.PlayScreen = me.ScreenObject.extend({
-
-	darktiles:[],
 
 	/**	
 	 *  action to perform on state change
@@ -18,28 +17,51 @@ game.PlayScreen = me.ScreenObject.extend({
 			}
 		}
 
-		this.buildLayer();
-		var _self = this;
-		me.event.subscribe('playerPosChange', function() { _self.onPlayerPosChange(); });
+		this.buildDarkLayer();
 
-		game.PlayScreen.instance = this;
+		var _self = this;
+		me.event.subscribe('placeTorch', function(data) { _self.placeTorch(data); });
 	},
 
-	onPlayerPosChange:function() {
+	resetLevel:function() {
+		me.levelDirector.reloadLevel(true);
+		this.buildDarkLayer();
+	},
+
+	placeTorch:function(pos) {
+		var torch = new game.TorchEntity(pos.x * me.game.currentLevel.tilewidth, pos.y * me.game.currentLevel.tileheight);
+		me.game.add(torch, 3);
+		me.game.sort();
+		this.lightUpArea(pos);
+	},
+
+	lightUpArea:function(pos) {
 		var tiles = [
-			{x:game.player.gridPos.x, y:game.player.gridPos.y},
-			{x:game.player.gridPos.x+1, y:game.player.gridPos.y},
-			{x:game.player.gridPos.x-1, y:game.player.gridPos.y},
-			{x:game.player.gridPos.x, y:game.player.gridPos.y+1},
-			{x:game.player.gridPos.x, y:game.player.gridPos.y-1},
+			{x:pos.x, y:pos.y},
+			{x:pos.x+1, y:pos.y},
+			{x:pos.x-1, y:pos.y},
+			{x:pos.x, y:pos.y+1},
+			{x:pos.x, y:pos.y-1},
+
+			{x:pos.x+1, y:pos.y+1},
+			{x:pos.x-1, y:pos.y-1},
+			{x:pos.x-1, y:pos.y+1},
+			{x:pos.x+1, y:pos.y-1},
+
+			{x:pos.x+2, y:pos.y},
+			{x:pos.x-2, y:pos.y},
+			{x:pos.x, y:pos.y+2},
+			{x:pos.x, y:pos.y-2}
 		];
-		
+
 		for(var i = 0; i < tiles.length; i++) {
-			this.darktiles[tiles[i].x][tiles[i].y].visible = false;
+			darktiles[tiles[i].x][tiles[i].y].visible = false;
 		}
 	},
 
-	buildLayer:function() {
+	buildDarkLayer:function() {
+		darktiles = [];
+
 		for(var x = 0; x < me.game.currentLevel.cols; x++) {
 			for(var y = 0; y < me.game.currentLevel.cols; y++) {
 				var tile = new game.DarknessEntity(x*me.game.currentLevel.tilewidth, y*me.game.currentLevel.tileheight, {});
@@ -47,11 +69,11 @@ game.PlayScreen = me.ScreenObject.extend({
 				me.game.add(tile, 5000);
 				me.game.sort();
 
-				if(!this.darktiles[x]) {
-					this.darktiles[x] = [];
+				if(!darktiles[x]) {
+					darktiles[x] = [];
 				}
 
-				this.darktiles[x][y] = tile;
+				darktiles[x][y] = tile;
 			}
 		}
 	},
@@ -60,6 +82,6 @@ game.PlayScreen = me.ScreenObject.extend({
 	 *  action to perform when leaving this screen (state change)
 	 */
 	onDestroyEvent: function() {
-		
+
 	}
 });

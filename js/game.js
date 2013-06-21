@@ -29,10 +29,9 @@ var game = {
 		me.state.change(me.state.LOADING);
 
 		//debug info
-	//	me.debug.renderHitBox = true;
-	//	me.debug.displayFPS = true;
+		//me.debug.renderHitBox = true;
+		me.debug.displayFPS = true;
 	},
-
 
 
 	// Run on game resources loaded.
@@ -50,12 +49,21 @@ var game = {
 		me.entityPool.add('DeathTrapEntity', game.DeathTrapEntity);
 		me.entityPool.add('TestObject', game.TestObject);
 		me.entityPool.add('DarknessEntity', game.DarknessEntity);
+		me.entityPool.add('TorchEntity', game.TorchEntity);
+		me.entityPool.add('BulletEntity', game.BulletEntity);
 
 		//registre oure controlls
 		me.input.bindKey(me.input.KEY.A, 'left');
 		me.input.bindKey(me.input.KEY.D, 'right');
 		me.input.bindKey(me.input.KEY.W, 'up');
 		me.input.bindKey(me.input.KEY.S, 'down');
+
+		me.input.bindKey(me.input.KEY.LEFT, 'shoot_left');
+		me.input.bindKey(me.input.KEY.RIGHT, 'shoot_right');
+		me.input.bindKey(me.input.KEY.UP, 'shoot_up');
+		me.input.bindKey(me.input.KEY.DOWN, 'shoot_down');
+
+		me.input.bindKey(me.input.KEY.SPACE, 'place_torch');
 
 		// Start the game.
 		me.state.change(me.state.PLAY);
