@@ -5,7 +5,7 @@ game.PlayerEntity = game.CreatureEntity.extend({
 	init:function(x, y, settings) {
 		this.parent(x, y, settings);
 
-		this.setVelocity(6, 6);
+		this.setVelocity(4, 4);
 		this.updateColRect(18, 60, -1, 0);
 
 		this.camPos = new me.Vector2d(96*8, 96*8);

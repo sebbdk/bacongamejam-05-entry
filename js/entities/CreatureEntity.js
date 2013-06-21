@@ -27,7 +27,7 @@ function PlayerShotConfig() {
 				to_y:dest.y
 			});
 
-			me.game.add(bullet, 4);
+			me.game.add(bullet, 10);
 			me.game.sort();
 			this.lastShot = new Date().getTime();
 		}

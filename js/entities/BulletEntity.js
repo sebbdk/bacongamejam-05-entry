@@ -28,7 +28,7 @@ game.BulletEntity = me.ObjectEntity.extend({
 		this.destination.y = settings.to_y;
 		this.parent(settings.from_x, settings.from_y, settings);
 
-		this.updateColRect(18, 60, 10, 80);
+		this.updateColRect(25, 50, 20, 55);
 		this.calculateMovementMomentum();
 	},
 
