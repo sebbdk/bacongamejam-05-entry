@@ -17,16 +17,18 @@ game.BulletEntity = me.ObjectEntity.extend({
 	isMonster:true,
 
 	init:function(settings) {
-		this.inst++;
 		settings.image = "torch";
 		settings.spritewidth = 96;
 		settings.spriteheight = 96;
+
 		this.speed = settings.speed !== undefined ? settings.speed:this.speed;
 		this.evil = settings.evil;
 
 		this.destination.x = settings.to_x;
 		this.destination.y = settings.to_y;
 		this.parent(settings.from_x, settings.from_y, settings);
+
+		this.updateColRect(18, 60, 10, 80);
 		this.calculateMovementMomentum();
 	},
 
@@ -34,12 +36,6 @@ game.BulletEntity = me.ObjectEntity.extend({
 		this.pos.x += this.moveVelocity.x;
 		this.pos.y += this.moveVelocity.y;
 		me.game.collide(this);
-	},
-
-	draw: function(context, rect) {
-		this.parent(context, rect);
-		//context.fillStyle = 'green';
-		//context.fillRect(this.pos.x, this.pos.y, 100, 100);
 	},
 
 	onCollision:function(res, obj) {

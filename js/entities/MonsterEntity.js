@@ -27,44 +27,7 @@ game.MonsterEntity = game.CreatureEntity.extend({
 	},
 
 	attackPlayer:function() {
-		this.findPath();
-	},
-
-	findPath:function() {
-		if(this.pos) {
-			//game.grid.setWalkableAt(this.gridPos.x, this.gridPos.y, true);
-
-			if(this.destination) {
-				//game.grid.setWalkableAt(this.destination[0], this.destination[1], true);
-			}
-
-			var grid = game.grid.clone();
-			this.path = game.finder.findPath(
-				Math.round(this.pos.x/96),
-				Math.round(this.pos.y/96),
-
-				game.player.gridPos.x,
-				game.player.gridPos.y,
-				grid
-			);
-
-			this.path.shift();
-
-			this.gotoVector = null;
-
-			if(this.path.length) {
-				this.destination = [this.path[this.path.length-1][0], this.path[this.path.length-1][1]];
-				//game.grid.setWalkableAt(this.destination[0], this.destination[1], false);
-			}
-
-			//game.grid.setWalkableAt(this.gridPos.x, this.gridPos.y, false);
-		}
-	},
-
-	onCollision:function(res, obj) {
-		if(obj === game.player) {
-			//me.state.current().resetLevel();
-		}
+		this.findPath(game.player.gridPos);
 	},
 
 /**

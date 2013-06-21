@@ -30,7 +30,7 @@ var game = {
 
 		//debug info
 		//me.debug.renderHitBox = true;
-		me.debug.displayFPS = true;
+		//me.debug.displayFPS = true;
 	},
 
 
