@@ -36,6 +36,7 @@ game.BulletEntity = me.ObjectEntity.extend({
 		this.pos.x += this.moveVelocity.x;
 		this.pos.y += this.moveVelocity.y;
 		me.game.collide(this);
+		return true;
 	},
 
 	onCollision:function(res, obj) {
