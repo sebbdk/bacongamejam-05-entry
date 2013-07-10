@@ -29,7 +29,7 @@ var game = {
 		me.state.change(me.state.LOADING);
 
 		//debug info
-		me.debug.renderHitBox = true;
+		//me.debug.renderHitBox = true;
 		//me.debug.displayFPS = true;
 	},
 
