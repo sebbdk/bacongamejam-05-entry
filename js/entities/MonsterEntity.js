@@ -24,6 +24,7 @@ game.MonsterEntity = game.CreatureEntity.extend({
 		};
 
 		this.shotConfig = new MonsterShotConfig();
+		this.shotConfig.lastShot = new Date().getTime();
 	},
 
 	attackPlayer:function() {
@@ -72,8 +73,8 @@ game.MonsterEntity = game.CreatureEntity.extend({
 
 			if(this.gotoVector === null || lineDistance(this.pos, this.gotoVector) < 10) {
 				if(this.gotoVector) {
-					this.pos.x = this.gotoVector.x;
-					this.pos.y = this.gotoVector.y;
+				///	this.pos.x = this.gotoVector.x;
+				//	this.pos.y = this.gotoVector.y;
 				}
 
 				if(this.path.length > 0) {

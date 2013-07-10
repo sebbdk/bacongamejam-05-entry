@@ -15,8 +15,14 @@ game.PlayerEntity = game.CreatureEntity.extend({
 
 		this.shotConfig = new PlayerShotConfig();
 
+		this.health = 100;
+
 		me.event.publish('playerPosChange', [this.gridPos]);
 		me.event.publish('playerAdded', this);
+	},
+
+	die:function() {
+		me.state.current().resetLevel();
 	},
 
 	isVisible:function() {

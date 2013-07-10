@@ -11,59 +11,13 @@ function lineDistance( point1, point2 ) {
 	return Math.sqrt( xs + ys );
 }
 
-function PlayerShotConfig() {
-	this.cooldown = 300;
-	this.lastShot = 0;
-
-	this.run = function(origin, dest, evil) {
-		evil = evil ? evil:false;
-
-		if(new Date().getTime() > this.lastShot+this.cooldown) {
-			var bullet = new game.BulletEntity({
-				from_x:origin.x,
-				from_y:origin.y,
-				evil:evil,
-				to_x:dest.x,
-				to_y:dest.y
-			});
-
-			me.game.add(bullet, 10);
-			me.game.sort();
-			this.lastShot = new Date().getTime();
-		}
-	};
-}
-
-function MonsterShotConfig() {
-	this.cooldown = 3000;
-	this.lastShot = 0;
-
-	this.run = function(origin, dest, evil) {
-		evil = evil ? evil:false;
-
-		if(new Date().getTime() > this.lastShot+this.cooldown) {
-			var bullet = new game.BulletEntity({
-				from_x:origin.x,
-				from_y:origin.y,
-				evil:evil,
-				speed:2,
-				to_x:dest.x,
-				to_y:dest.y
-			});
-
-			me.game.add(bullet, 4);
-			me.game.sort();
-			this.lastShot = new Date().getTime();
-		}
-	};
-}
-
 game.CreatureEntity = me.ObjectEntity.extend({
 
 	isMonster:false,
 	path:null,
-
 	shotConfig:null,
+	health:5,
+	canPush:true,
 
 	lastPathFindTime:Math.round(new Date().getTime()),
 
@@ -82,9 +36,20 @@ game.CreatureEntity = me.ObjectEntity.extend({
 		};
 	},
 
+	damage:function(d) {
+		this.health -= d;
+		if(this.health < 0) {
+			this.die();
+		}
+	},
+
+	die:function() {
+		me.game.remove(this);
+	},
+
 	shoot:function(dest, evil) {
 		if(this.shotConfig) {
-			this.shotConfig.run(this.pos, dest, evil);
+			this.shotConfig.run(this, dest, evil);
 		}
 	},
 

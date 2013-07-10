@@ -1,6 +1,8 @@
 var darktiles = [];
 game.PlayScreen = me.ScreenObject.extend({
 
+	hasDarklayer:false,
+
 	/**	
 	 *  action to perform on state change
 	 */
@@ -36,44 +38,48 @@ game.PlayScreen = me.ScreenObject.extend({
 	},
 
 	lightUpArea:function(pos) {
-		var tiles = [
-			{x:pos.x, y:pos.y},
-			{x:pos.x+1, y:pos.y},
-			{x:pos.x-1, y:pos.y},
-			{x:pos.x, y:pos.y+1},
-			{x:pos.x, y:pos.y-1},
+		if(darktiles.length > 0) {
+			var tiles = [
+				{x:pos.x, y:pos.y},
+				{x:pos.x+1, y:pos.y},
+				{x:pos.x-1, y:pos.y},
+				{x:pos.x, y:pos.y+1},
+				{x:pos.x, y:pos.y-1},
 
-			{x:pos.x+1, y:pos.y+1},
-			{x:pos.x-1, y:pos.y-1},
-			{x:pos.x-1, y:pos.y+1},
-			{x:pos.x+1, y:pos.y-1},
+				{x:pos.x+1, y:pos.y+1},
+				{x:pos.x-1, y:pos.y-1},
+				{x:pos.x-1, y:pos.y+1},
+				{x:pos.x+1, y:pos.y-1},
 
-			{x:pos.x+2, y:pos.y},
-			{x:pos.x-2, y:pos.y},
-			{x:pos.x, y:pos.y+2},
-			{x:pos.x, y:pos.y-2}
-		];
+				{x:pos.x+2, y:pos.y},
+				{x:pos.x-2, y:pos.y},
+				{x:pos.x, y:pos.y+2},
+				{x:pos.x, y:pos.y-2}
+			];
 
-		for(var i = 0; i < tiles.length; i++) {
-			darktiles[tiles[i].x][tiles[i].y].visible = false;
+			for(var i = 0; i < tiles.length; i++) {
+				darktiles[tiles[i].x][tiles[i].y].visible = false;
+			}
 		}
 	},
 
 	buildDarkLayer:function() {
-		darktiles = [];
+		if(this.hasDarklayer) {
+			darktiles = [];
 
-		for(var x = 0; x < me.game.currentLevel.cols; x++) {
-			for(var y = 0; y < me.game.currentLevel.cols; y++) {
-				var tile = new game.DarknessEntity(x*me.game.currentLevel.tilewidth, y*me.game.currentLevel.tileheight, {});
-				//tile.visible = false;
-				me.game.add(tile, 5000);
-				me.game.sort();
+			for(var x = 0; x < me.game.currentLevel.cols; x++) {
+				for(var y = 0; y < me.game.currentLevel.cols; y++) {
+					var tile = new game.DarknessEntity(x*me.game.currentLevel.tilewidth, y*me.game.currentLevel.tileheight, {});
+					//tile.visible = false;
+					me.game.add(tile, 5000);
+					me.game.sort();
 
-				if(!darktiles[x]) {
-					darktiles[x] = [];
+					if(!darktiles[x]) {
+						darktiles[x] = [];
+					}
+
+					darktiles[x][y] = tile;
 				}
-
-				darktiles[x][y] = tile;
 			}
 		}
 	},
